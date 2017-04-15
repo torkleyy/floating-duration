@@ -1,0 +1,15 @@
+[package]
+name = "floating-duration"
+version = "0.1.0"
+authors = ["Thomas Schaller <torkleyy>"]
+description = """
+Converts durations to fractional numbers and
+allows automatic formatting of durations.
+"""
+documentation = "https://torkleyy.github.io/floating-duration/"
+repository = "https://github.com/torkleyy/floating-duration"
+license = "MIT/Apache-2.0"
+keywords = ["time", "float", "fmt", "formatting", "fractional"]
+categories = ["date-and-time"]
+
+[dependencies]
