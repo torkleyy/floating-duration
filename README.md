@@ -1,5 +1,18 @@
 # floating-duration
 
+[![Build Status][bi]][bl] [![Crates.io][ci]][cl] ![MIT/Apache][li] [![Docs.rs][di]][dl]
+
+[bi]: https://travis-ci.org/torkleyy/floating-duration.svg?branch=master
+[bl]: https://travis-ci.org/torkleyy/floating-duration
+
+[ci]: https://img.shields.io/crates/v/floating-duration.svg
+[cl]: https://crates.io/crates/floating-duration/
+
+[li]: https://img.shields.io/badge/license-MIT%2FApache-blue.svg
+
+[di]: https://docs.rs/floating-duration/badge.svg
+[dl]: https://docs.rs/floating-duration/
+
 Allows converting a `Duration` to floating-point seconds, milliseconds and microseconds. 
 Additionally, it allows automatic formatting of a `Duration` (it automatically chooses
 a unit).
