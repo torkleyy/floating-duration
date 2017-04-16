@@ -135,7 +135,7 @@ impl<T: Borrow<Duration>> Display for TimeFormat<T> {
 
         if dur.as_secs() > 0 {
             write!(f, "{:.3} seconds", dur.as_fractional_secs())
-        } else if dur.subsec_nanos() > 1_000_0000 {
+        } else if dur.subsec_nanos() > 1_000_000 {
             write!(f, "{:.3} milliseconds", dur.as_fractional_millis())
         } else if dur.subsec_nanos() > 1_000 {
             write!(f, "{:.3} microseconds", dur.as_fractional_micros())
