@@ -25,7 +25,7 @@ Add this crate to `Cargo.toml`
 
 ```toml
 [dependencies]
-floating-duration = "0.1"
+floating-duration = "0.1.1"
 ```
 
 Now you can easily print a `Duration`:

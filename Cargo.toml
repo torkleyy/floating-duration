@@ -1,6 +1,6 @@
 [package]
 name = "floating-duration"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Thomas Schaller <torkleyy>"]
 description = """
 Converts durations to fractional numbers and
