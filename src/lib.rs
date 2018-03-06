@@ -114,6 +114,10 @@ impl<T: Borrow<Duration>> TimeAsFloat for T {
 /// * `secs > 0.000_001` => microseconds with precision 3
 /// * otherwise => nanoseconds
 ///
+/// If the the format string is specified with the [alternate flag] `{:#}`,
+/// the duration is formatted using abbreviated units instead (e.g. "ms"
+/// instead of "milliseconds").
+///
 /// # Examples
 ///
 /// ```
@@ -123,9 +127,12 @@ impl<T: Borrow<Duration>> TimeAsFloat for T {
 /// let dur = Duration::new(0, 461_933);
 /// let formatted = format!("{}", TimeFormat(dur));
 /// assert_eq!(formatted, "461.933 microseconds");
+/// let alternate = format!("{:#}", TimeFormat(dur));
+/// assert_eq!(alternate, "461.933µs");
 /// ```
-///
+/// 
 /// [`Display`]: https://doc.rust-lang.org/stable/std/fmt/trait.Display.html
+/// [alternate flag]: https://doc.rust-lang.org/stable/std/fmt/#sign0
 #[derive(Clone, Copy, Debug)]
 pub struct TimeFormat<T: Borrow<Duration>>(pub T);
 
@@ -134,13 +141,29 @@ impl<T: Borrow<Duration>> Display for TimeFormat<T> {
         let dur: &Duration = self.0.borrow();
 
         if dur.as_secs() > 0 {
-            write!(f, "{:.3} seconds", dur.as_fractional_secs())
+            if f.alternate() {
+                write!(f, "{:.3}s", dur.as_fractional_secs())
+            } else {
+                write!(f, "{:.3} seconds", dur.as_fractional_secs())
+            }
         } else if dur.subsec_nanos() > 1_000_000 {
-            write!(f, "{:.3} milliseconds", dur.as_fractional_millis())
+            if f.alternate() {
+                write!(f, "{:.3}ms", dur.as_fractional_millis())
+            } else {
+                write!(f, "{:.3} milliseconds", dur.as_fractional_millis())
+            }
         } else if dur.subsec_nanos() > 1_000 {
-            write!(f, "{:.3} microseconds", dur.as_fractional_micros())
+            if f.alternate() {
+                write!(f, "{:.3}µs", dur.as_fractional_micros())
+            } else {
+                write!(f, "{:.3} microseconds", dur.as_fractional_micros())
+            }
         } else {
-            write!(f, "{} nanoseconds", dur.subsec_nanos())
+            if f.alternate() {
+                write!(f, "{}ns", dur.subsec_nanos())
+            } else {
+                write!(f, "{} nanoseconds", dur.subsec_nanos())
+            }
         }
     }
 }
