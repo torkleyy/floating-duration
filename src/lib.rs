@@ -72,6 +72,8 @@ use std::time::Duration;
 /// let result = (1..12).fold(1, |acc, x| acc * x);
 ///
 /// println!("Needed {} seconds", start.elapsed().as_fractional_secs());
+/// // or:
+/// println!("Needed {:#}", start.elapsed().as_fractional_secs()); // uses the full unit name
 /// println!("Result: {}", result);
 /// ```
 pub trait TimeAsFloat {
