@@ -111,9 +111,9 @@ impl<T: Borrow<Duration>> TimeAsFloat for T {
 ///
 /// # Behaviour
 ///
-/// * `secs > 0` => seconds with precision 3
-/// * `secs > 0.001` => milliseconds with precision 3
-/// * `secs > 0.000_001` => microseconds with precision 3
+/// * `secs > 0` => seconds with up to 3 decimal places
+/// * `secs > 0.001` => milliseconds with up to 3 decimal places
+/// * `secs > 0.000_001` => microseconds with up to 3 decimal places
 /// * otherwise => nanoseconds
 ///
 /// By default the duration is formatted using abbreviated units
@@ -128,11 +128,11 @@ impl<T: Borrow<Duration>> TimeAsFloat for T {
 /// use std::time::Duration;
 /// use floating_duration::TimeFormat;
 ///
-/// let dur = Duration::new(0, 461_933);
+/// let dur = Duration::new(0, 461_930);
 /// let formatted = format!("{}", TimeFormat(dur));
-/// assert_eq!(formatted, "461.933µs");
+/// assert_eq!(formatted, "461.93µs");
 /// let alternate = format!("{:#}", TimeFormat(dur));
-/// assert_eq!(alternate, "461.933 microseconds");
+/// assert_eq!(alternate, "461.93 microseconds");
 /// ```
 ///
 /// [`Display`]: https://doc.rust-lang.org/stable/std/fmt/trait.Display.html
