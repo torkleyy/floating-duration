@@ -111,9 +111,9 @@ impl<T: Borrow<Duration>> TimeAsFloat for T {
 ///
 /// # Behaviour
 ///
-/// * `secs > 0` => seconds with precision 3
-/// * `secs > 0.001` => milliseconds with precision 3
-/// * `secs > 0.000_001` => microseconds with precision 3
+/// * `secs > 0` => seconds with up to 3 decimal places
+/// * `secs > 0.001` => milliseconds with up to 3 decimal places
+/// * `secs > 0.000_001` => microseconds with up to 3 decimal places
 /// * otherwise => nanoseconds
 ///
 /// By default the duration is formatted using abbreviated units
@@ -128,11 +128,11 @@ impl<T: Borrow<Duration>> TimeAsFloat for T {
 /// use std::time::Duration;
 /// use floating_duration::TimeFormat;
 ///
-/// let dur = Duration::new(0, 461_933);
+/// let dur = Duration::new(0, 461_930);
 /// let formatted = format!("{}", TimeFormat(dur));
-/// assert_eq!(formatted, "461.933µs");
+/// assert_eq!(formatted, "461.93µs");
 /// let alternate = format!("{:#}", TimeFormat(dur));
-/// assert_eq!(alternate, "461.933 microseconds");
+/// assert_eq!(alternate, "461.93 microseconds");
 /// ```
 ///
 /// [`Display`]: https://doc.rust-lang.org/stable/std/fmt/trait.Display.html
@@ -146,21 +146,21 @@ impl<T: Borrow<Duration>> Display for TimeFormat<T> {
 
         if dur.as_secs() > 0 {
             if !f.alternate() {
-                write!(f, "{:.3}s", dur.as_fractional_secs())
+                write!(f, "{}s", round_3_decimals(dur.as_fractional_secs()))
             } else {
-                write!(f, "{:.3} seconds", dur.as_fractional_secs())
+                write!(f, "{} seconds", round_3_decimals(dur.as_fractional_secs()))
             }
         } else if dur.subsec_nanos() > 1_000_000 {
             if !f.alternate() {
-                write!(f, "{:.3}ms", dur.as_fractional_millis())
+                write!(f, "{}ms", round_3_decimals(dur.as_fractional_millis()))
             } else {
-                write!(f, "{:.3} milliseconds", dur.as_fractional_millis())
+                write!(f, "{} milliseconds", round_3_decimals(dur.as_fractional_millis()))
             }
         } else if dur.subsec_nanos() > 1_000 {
             if !f.alternate() {
-                write!(f, "{:.3}µs", dur.as_fractional_micros())
+                write!(f, "{}µs", round_3_decimals(dur.as_fractional_micros()))
             } else {
-                write!(f, "{:.3} microseconds", dur.as_fractional_micros())
+                write!(f, "{} microseconds", round_3_decimals(dur.as_fractional_micros()))
             }
         } else {
             if !f.alternate() {
@@ -170,4 +170,8 @@ impl<T: Borrow<Duration>> Display for TimeFormat<T> {
             }
         }
     }
+}
+
+fn round_3_decimals(x: f64) -> f64 {
+    (1000. * x).round() / 1000.
 }
