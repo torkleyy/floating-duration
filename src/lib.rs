@@ -173,5 +173,5 @@ impl<T: Borrow<Duration>> Display for TimeFormat<T> {
 }
 
 fn round_3_decimals(x: f64) -> f64 {
-    return (1000. * x).round() / 1000.
+    (1000. * x).round() / 1000.
 }
