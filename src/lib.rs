@@ -146,21 +146,21 @@ impl<T: Borrow<Duration>> Display for TimeFormat<T> {
 
         if dur.as_secs() > 0 {
             if !f.alternate() {
-                write!(f, "{:.3}s", dur.as_fractional_secs())
+                write!(f, "{:.3}s", round_3_decimals(dur.as_fractional_secs()))
             } else {
-                write!(f, "{:.3} seconds", dur.as_fractional_secs())
+                write!(f, "{:.3} seconds", round_3_decimals(dur.as_fractional_secs()))
             }
         } else if dur.subsec_nanos() > 1_000_000 {
             if !f.alternate() {
-                write!(f, "{:.3}ms", dur.as_fractional_millis())
+                write!(f, "{}ms", round_3_decimals(dur.as_fractional_millis()))
             } else {
-                write!(f, "{:.3} milliseconds", dur.as_fractional_millis())
+                write!(f, "{} milliseconds", round_3_decimals(dur.as_fractional_millis()))
             }
         } else if dur.subsec_nanos() > 1_000 {
             if !f.alternate() {
-                write!(f, "{:.3}µs", dur.as_fractional_micros())
+                write!(f, "{}µs", round_3_decimals(dur.as_fractional_micros()))
             } else {
-                write!(f, "{:.3} microseconds", dur.as_fractional_micros())
+                write!(f, "{} microseconds", round_3_decimals(dur.as_fractional_micros()))
             }
         } else {
             if !f.alternate() {
@@ -170,4 +170,8 @@ impl<T: Borrow<Duration>> Display for TimeFormat<T> {
             }
         }
     }
+}
+
+fn round_3_decimals(x: f64) -> f64 {
+    return (1000. * x).round() / 1000.
 }
