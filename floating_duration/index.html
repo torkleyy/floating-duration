@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `floating_duration` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, floating_duration">
+
+    <title>floating_duration - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle">
+    <script src="../storage.js"></script>
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Crate floating_duration</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'floating_duration', ty: 'mod', relpath: '../'};</script></div>
+    </nav>
+
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>floating_duration</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/floating_duration/lib.rs.html#9-177' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>A small crate which allows combining
+a <a href="https://doc.rust-lang.org/stable/std/time/struct.Duration.html"><code>Duration</code></a>'s seconds and nanoseconds
+into <a href="trait.TimeAsFloat.html#tymethod.as_fractional_secs">seconds</a>, <a href="trait.TimeAsFloat.html#tymethod.as_fractional_millis">milliseconds</a> and <a href="trait.TimeAsFloat.html#tymethod.as_fractional_micros">microseconds</a>.
+Additionally, it allows <a href="struct.TimeFormat.html">easy formatting</a> of a
+<code>Duration</code> for performance measurements.</p>
+<h2 id="conversion-to-fractional" class="section-header"><a href="#conversion-to-fractional">Conversion to fractional</a></h2>
+<pre class="rust rust-example-rendered">
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
+<span class="kw">use</span> <span class="ident">floating_duration</span>::<span class="ident">TimeAsFloat</span>;
+
+<span class="kw">let</span> <span class="ident">duration</span> <span class="op">=</span> <span class="ident">Duration</span>::<span class="ident">new</span>(<span class="number">4</span>, <span class="number">123_456_789</span>);
+
+<span class="kw">let</span> <span class="ident">secs</span> <span class="op">=</span> <span class="ident">duration</span>.<span class="ident">as_fractional_secs</span>(); <span class="comment">// 4.12..</span>
+<span class="kw">let</span> <span class="ident">millis</span> <span class="op">=</span> <span class="ident">duration</span>.<span class="ident">as_fractional_millis</span>(); <span class="comment">// 4_123.45..</span>
+<span class="kw">let</span> <span class="ident">micros</span> <span class="op">=</span> <span class="ident">duration</span>.<span class="ident">as_fractional_micros</span>(); <span class="comment">// 4_123_456.78..</span></pre>
+<h2 id="automatic-formatting" class="section-header"><a href="#automatic-formatting">Automatic formatting</a></h2>
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Instant</span>;
+<span class="kw">use</span> <span class="ident">floating_duration</span>::<span class="ident">TimeFormat</span>;
+
+
+<span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">Instant</span>::<span class="ident">now</span>();
+
+<span class="ident">do_something</span>();
+
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Needed {}&quot;</span>, <span class="ident">TimeFormat</span>(<span class="ident">start</span>.<span class="ident">elapsed</span>()));</pre>
+<p>Output: <code>Needed 12.841µs</code></p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TimeFormat.html"
+                                  title='struct floating_duration::TimeFormat'>TimeFormat</a></td>
+                           <td class='docblock-short'>
+                                <p>A formatting newtype for providing a
+<a href="https://doc.rust-lang.org/stable/std/fmt/trait.Display.html"><code>Display</code></a> implementation. This format is
+meant to be used for printing performance measurements.</p>
+
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.TimeAsFloat.html"
+                                  title='trait floating_duration::TimeAsFloat'>TimeAsFloat</a></td>
+                           <td class='docblock-short'>
+                                <p>Trait for providing <code>as_fractional_*</code> methods.</p>
+
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt><kbd>?</kbd></dt>
+                    <dd>Show this help dialog</dd>
+                    <dt><kbd>S</kbd></dt>
+                    <dd>Focus the search field</dd>
+                    <dt><kbd>↑</kbd></dt>
+                    <dd>Move up in search results</dd>
+                    <dt><kbd>↓</kbd></dt>
+                    <dd>Move down in search results</dd>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
+                    <dd>Go to active search result</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "floating_duration";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

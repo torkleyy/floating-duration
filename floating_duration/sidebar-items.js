@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["TimeFormat","A formatting newtype for providing a [`Display`] implementation. This format is meant to be used for printing performance measurements."]],"trait":[["TimeAsFloat","Trait for providing `as_fractional_*` methods."]]});
