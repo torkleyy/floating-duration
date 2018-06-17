@@ -146,9 +146,9 @@ impl<T: Borrow<Duration>> Display for TimeFormat<T> {
 
         if dur.as_secs() > 0 {
             if !f.alternate() {
-                write!(f, "{:.3}s", round_3_decimals(dur.as_fractional_secs()))
+                write!(f, "{}s", round_3_decimals(dur.as_fractional_secs()))
             } else {
-                write!(f, "{:.3} seconds", round_3_decimals(dur.as_fractional_secs()))
+                write!(f, "{} seconds", round_3_decimals(dur.as_fractional_secs()))
             }
         } else if dur.subsec_nanos() > 1_000_000 {
             if !f.alternate() {
